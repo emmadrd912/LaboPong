@@ -1,10 +1,5 @@
 from tkinter import *
 
-def deplacement():
-    global Pos_X, Pos_Y
-    canvas.move(ball, Pos_X, Pos_Y)
-    fenetre.after(20, deplacement)
-
 def bas1(event):
     canvas.move(raquette, 0, 20)
 
@@ -16,6 +11,17 @@ def haut1(event):
 
 def haut2(event):
     canvas.move(raquette2, 0, -20)
+
+def deplacement():
+    global dx, dy
+    if canvas.coords(ball)[3]>720:
+        dy = -1*dy
+    if canvas.coords(ball)[3]<10:
+        dy = -1*dy
+    canvas.move(ball,dx,dy)
+    fenetre.after(20,deplacement)
+
+
 
 raqx0 = 70
 raqy0 = 300
@@ -29,6 +35,8 @@ raq2y1 = 420
 
 Pos_X = 500
 Pos_Y = 300
+dx = 0
+dy = 5
 
 fenetre = Tk()
 canvas = Canvas(fenetre, width=1080, height=720, bg='black')
@@ -43,5 +51,4 @@ canvas.bind_all('<z>', haut1)
 canvas.bind_all('<Up>', haut2)
 
 deplacement()
-
 fenetre.mainloop()
