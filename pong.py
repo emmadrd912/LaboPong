@@ -18,10 +18,12 @@ def deplacement():
         dy = -1*dy
     if canvas.coords(ball)[3]<10:
         dy = -1*dy
+    if canvas.coords(ball)[2]>1080:
+        dx = -1*dx
+    if canvas.coords(ball)[2]<10:
+        dx = -1*dx    
     canvas.move(ball,dx,dy)
     fenetre.after(20,deplacement)
-
-
 
 raqx0 = 70
 raqy0 = 300
@@ -35,8 +37,8 @@ raq2y1 = 420
 
 Pos_X = 500
 Pos_Y = 300
-dx = 0
-dy = 5
+dx = 3
+dy = 6
 
 fenetre = Tk()
 canvas = Canvas(fenetre, width=1080, height=720, bg='black')
