@@ -1,27 +1,27 @@
 from tkinter import *
 
 def bas1(event):
-    canvas.move(raquette, 0, 20)
+    canvas.move(raquette, 0, 30)
 
 def bas2(event):
-    canvas.move(raquette2, 0, 20)
+    canvas.move(raquette2, 0, 30)
 
 def haut1(event):
-    canvas.move(raquette, 0, -20)
+    canvas.move(raquette, 0, -30)
 
 def haut2(event):
-    canvas.move(raquette2, 0, -20)
+    canvas.move(raquette2, 0, -30)
 
 def deplacement():
     global dx, dy
     if canvas.coords(ball)[3]>720:
         dy = -1*dy
     if canvas.coords(ball)[3]<10:
-        dy = -1*dy
-    if canvas.coords(ball)[2]>1080:
-        dx = -1*dx
-    if canvas.coords(ball)[2]<10:
-        dx = -1*dx    
+        dy = -1*dy 
+    if canvas.coords(ball)[3]>canvas.coords(raquette)[1] and canvas.coords(ball)[0]<canvas.coords(raquette)[2] and canvas.coords(ball)[2]>canvas.coords(raquette)[0]:
+        dx=-1*dx
+    if canvas.coords(ball)[3]>canvas.coords(raquette2)[1] and canvas.coords(ball)[0]<canvas.coords(raquette2)[2] and canvas.coords(ball)[2]>canvas.coords(raquette2)[0]:
+        dx=-1*dx         
     canvas.move(ball,dx,dy)
     fenetre.after(20,deplacement)
 
@@ -37,7 +37,7 @@ raq2y1 = 420
 
 Pos_X = 500
 Pos_Y = 300
-dx = 3
+dx = -3
 dy = 6
 
 fenetre = Tk()
