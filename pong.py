@@ -43,6 +43,7 @@ dy = 6
 fenetre = Tk()
 canvas = Canvas(fenetre, width=1080, height=720, bg='black')
 canvas.pack(padx=10, pady=10)
+canvas.create_line(540,0,540,720, fill='white') 
 ball = canvas.create_oval(Pos_X, Pos_Y, Pos_X+20, Pos_Y+20, fill='white')
 raquette = canvas.create_rectangle(raqx0, raqy0, raqx1, raqy1, fill='white')
 raquette2 = canvas.create_rectangle(raq2x0, raq2y0, raq2x1, raq2y1, fill='white')
