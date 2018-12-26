@@ -15,9 +15,12 @@ Pos_Y = 300
 dx = -3
 dy = 6
 
-score=0
+score = 0
+score2 = 0
 
 def jouer():
+    global menu
+
     def bas1(event):
         canvas.move(raquette, 0, 30)
 
@@ -31,7 +34,7 @@ def jouer():
         canvas.move(raquette2, 0, -30)
 
     def deplacement():
-        global dx, dy
+        global dx, dy, score
         if canvas.coords(ball)[3]>720:
             dy = -1*dy
         if canvas.coords(ball)[3]<10:
@@ -39,7 +42,10 @@ def jouer():
         if canvas.coords(ball)[3]>canvas.coords(raquette)[1] and canvas.coords(ball)[0]<canvas.coords(raquette)[2] and canvas.coords(ball)[2]>canvas.coords(raquette)[0]:
             dx=-1*dx
         if canvas.coords(ball)[3]>canvas.coords(raquette2)[1] and canvas.coords(ball)[0]<canvas.coords(raquette2)[2] and canvas.coords(ball)[2]>canvas.coords(raquette2)[0]:
-            dx=-1*dx       
+            dx=-1*dx 
+        if canvas.coords(ball)[0]<10:
+            score = score + 1
+            TextGame.set("Joueur 1 : "+ str(score))   
         canvas.move(ball,dx,dy)
         fenetre.after(20,deplacement)
 
@@ -59,6 +65,11 @@ def jouer():
     canvas.bind_all('<Down>', bas2)
     canvas.bind_all('<z>', haut1)
     canvas.bind_all('<Up>', haut2)
+
+    TextGame = StringVar()
+    LabelGame = Label(fenetre, textvariable = TextGame , bg ="grey")
+    TextGame.set("Joueur 1 : "+ str(score))
+    LabelGame.pack(padx = 15, pady = 5)
 
     deplacement()
     fenetre.mainloop()
