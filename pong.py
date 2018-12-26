@@ -15,6 +15,8 @@ Pos_Y = 300
 dx = -3
 dy = 6
 
+score=0
+
 def jouer():
     def bas1(event):
         canvas.move(raquette, 0, 30)
@@ -37,13 +39,14 @@ def jouer():
         if canvas.coords(ball)[3]>canvas.coords(raquette)[1] and canvas.coords(ball)[0]<canvas.coords(raquette)[2] and canvas.coords(ball)[2]>canvas.coords(raquette)[0]:
             dx=-1*dx
         if canvas.coords(ball)[3]>canvas.coords(raquette2)[1] and canvas.coords(ball)[0]<canvas.coords(raquette2)[2] and canvas.coords(ball)[2]>canvas.coords(raquette2)[0]:
-            dx=-1*dx         
+            dx=-1*dx       
         canvas.move(ball,dx,dy)
         fenetre.after(20,deplacement)
 
     menu.destroy()
     fenetre = Tk()
     fenetre.title("Jeu Pong")
+
 
     canvas = Canvas(fenetre, width=1080, height=720, bg='black')
     canvas.pack(padx=10, pady=10)
@@ -60,14 +63,33 @@ def jouer():
     deplacement()
     fenetre.mainloop()
 
+def instruction():
+    fenetre = Tk()
+    fenetre.title("Instruction et commande")
+    label = Label(fenetre, text="Commande : ", bg="grey")
+    label.pack()
+    label = Label(fenetre, text=" Joueur 1 = z & s")
+    label.pack()
+    label = Label(fenetre, text=" Joueur 2 = ↑ & ↓ ")
+    label.pack()
+    label = Label(fenetre, text="Instruction: ", bg="grey")
+    label.pack()
+    label = Label(fenetre, text="Le but du jeu est de faire rebondir la balle sur les raquettes de chaque joueur (comme un tennis de table).")
+    label.pack()
+    label = Label(fenetre, text="Les raquettes se déplacent de haut en bas. Lorsqu'un joueur laisse passer la balle, l'autre joueur gagne 1 point.")
+    label.pack()
+
 menu = Tk()
 menu.title("[Pong]")
-menu.geometry("260x90")
+menu.geometry("260x120")
  
 ButtonJouer = Button(menu, text ="   Jouer   ", command = jouer)
 ButtonJouer.pack(padx = 5, pady = 5)
  
+ButtonInstruction = Button(menu,text="Instruction et Commande", command= instruction)
+ButtonInstruction.pack(padx = 10, pady = 5)
+
 ButtonQuitter = Button(menu, text ="   Quitter    ", command = menu.destroy)
 ButtonQuitter.pack(padx = 5, pady = 5)
- 
+
 menu.mainloop()
