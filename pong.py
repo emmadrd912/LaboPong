@@ -21,6 +21,8 @@ score2 = 0
 def jouer():
     global menu
 
+    point.destroy()
+    
     def bas1(event):
         canvas.move(raquette, 0, 30)
 
@@ -49,10 +51,8 @@ def jouer():
         canvas.move(ball,dx,dy)
         fenetre.after(20,deplacement)
 
-    menu.destroy()
     fenetre = Tk()
     fenetre.title("Jeu Pong")
-
 
     canvas = Canvas(fenetre, width=1080, height=720, bg='black')
     canvas.pack(padx=10, pady=10)
@@ -89,14 +89,32 @@ def instruction():
     label.pack()
     label = Label(fenetre, text="Les raquettes se déplacent de haut en bas. Lorsqu'un joueur laisse passer la balle, l'autre joueur gagne 1 point.")
     label.pack()
+    ButtonFermer = Button(fenetre, text ="   Fermer    ", command = fenetre.destroy)
+    ButtonFermer.pack(padx = 5, pady = 5)
+
+def pointpartie(): 
+    menu.destroy()
+    point = Tk()
+    point.title("Points paties")
+    label = Label(point, text="Sélectionnez le nombre de points de la partie : ", bg="grey")
+    label.pack()
+    value = StringVar() 
+    bouton1 = Radiobutton(point, text="5 points", variable=value, value=1)
+    bouton2 = Radiobutton(point, text="10 points", variable=value, value=2)
+    bouton3 = Radiobutton(point, text="15 points", variable=value, value=3)
+    bouton1.pack()
+    bouton2.pack()
+    bouton3.pack()
+    ButtonValider = Button(point,text="Valider", command= jouer)
+    ButtonValider.pack(padx = 10, pady = 5)
+
 
 menu = Tk()
 menu.title("[Pong]")
 menu.geometry("260x120")
  
-ButtonJouer = Button(menu, text ="   Jouer   ", command = jouer)
+ButtonJouer = Button(menu, text ="   Jouer   ", command = pointpartie)
 ButtonJouer.pack(padx = 5, pady = 5)
- 
 ButtonInstruction = Button(menu,text="Instruction et Commande", command= instruction)
 ButtonInstruction.pack(padx = 10, pady = 5)
 
