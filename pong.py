@@ -34,15 +34,13 @@ class Ball:
 		self.x = random.choice([-2.5,2.5])
 		self.y = -2.5
 		
-	#check for score crossing 10 (win!)
-	def checkwin(self):
-		if self.score_j1 == 3:
+	def checkwin5(self):
+		if self.score_j1 == 5:
 			time.sleep(10)
 			self.x = 0
 			self.y = 0
-		if self.score_j2 == 3:
+		if self.score_j2 == 5:
 			time.sleep(10)
-			
 	
 	def update(self,val):
 		self.canvas.delete(self.point_j1)
@@ -134,7 +132,7 @@ class raquette2:
 			self.y = 0
 
 def jouer():
-	menu.destroy()
+	menu2.destroy()
 	jouer = Tk()
 	jouer.title('Pong')
 	jouer.resizable(0,0)
@@ -151,17 +149,78 @@ def jouer():
 		ball.draw()
 		paddle.draw()
 		paddle1.draw()
-		ball.checkwin()
+		ball.checkwin5()
 		jouer.update_idletasks()
 		jouer.update()
 		time.sleep(0.01)
 	quit()
 
+def jouer2():
+	menu2.destroy()
+	jouer = Tk()
+	jouer.title('Pong')
+	jouer.resizable(0,0)
+	canvas = Canvas(jouer,width=700,height=500, bg='black')
+	canvas.pack()
+	jouer.update()
+	canvas.create_line(350,0,350,500,fill='white')
+
+	paddle = raquette(canvas,'white')
+	paddle1 = raquette2(canvas,'white')		
+	ball = Ball(canvas,paddle1,paddle)
+		
+	while 1:
+		ball.draw()
+		paddle.draw()
+		paddle1.draw()
+		ball.checkwin5()
+		jouer.update_idletasks()
+		jouer.update()
+		time.sleep(0.01)
+	quit()
+
+def jouer3():
+	menu2.destroy()
+	jouer = Tk()
+	jouer.title('Pong')
+	jouer.resizable(0,0)
+	canvas = Canvas(jouer,width=700,height=500, bg='black')
+	canvas.pack()
+	jouer.update()
+	canvas.create_line(350,0,350,500,fill='white')
+
+	paddle = raquette(canvas,'white')
+	paddle1 = raquette2(canvas,'white')		
+	ball = Ball(canvas,paddle1,paddle)
+		
+	while 1:
+		ball.draw()
+		paddle.draw()
+		paddle1.draw()
+		ball.checkwin5()
+		jouer.update_idletasks()
+		jouer.update()
+		time.sleep(0.01)
+	quit()
+
+def menu2():
+    menu.destroy
+    menu2 = Tk()
+    menu2.title('Points')
+    label = Label(menu2, text=" Sélectionnez le nombre de points : ", bg="grey")
+    label.pack()
+    ButtonJouer1 = Button(menu2, text ="   5 points   ", command = jouer)
+    ButtonJouer1.pack(padx = 5, pady = 5)
+    ButtonJouer2 = Button(menu2, text ="   10 points   ", command = jouer2)
+    ButtonJouer2.pack(padx = 5, pady = 5)
+    ButtonJouer3 = Button(menu2, text ="   15 points   ", command = jouer3)
+    ButtonJouer3.pack(padx = 5, pady = 5)
+
 menu = Tk()
 menu.title("[Pong]")
 menu.geometry("260x120")
 
-ButtonJouer = Button(menu, text ="   Jouer   ", command = jouer)
+ButtonJouer = Button(menu, text ="   Jouer   ", command = menu2)
 ButtonJouer.pack(padx = 5, pady = 5)
 ButtonInstruction = Button(menu,text="Instruction et Commande", command= instruction)
 ButtonInstruction.pack(padx = 10, pady = 5)
