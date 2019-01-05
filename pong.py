@@ -1,77 +1,6 @@
 from tkinter import *
-
-raqx0 = 70
-raqy0 = 300
-raqx1 = 60
-raqy1 = 420
-
-raq2x0 = 1010
-raq2y0 = 300
-raq2x1 = 1020
-raq2y1 = 420
-
-Pos_X = 500
-Pos_Y = 300
-dx = -3
-dy = 6
-
-score = 0
-score2 = 0
-
-def jouer():
-    global menu
-    
-    def bas1(event):
-        canvas.move(raquette, 0, 30)
-
-    def bas2(event):
-        canvas.move(raquette2, 0, 30)
-
-    def haut1(event):
-        canvas.move(raquette, 0, -30)
-
-    def haut2(event):
-        canvas.move(raquette2, 0, -30)
-
-    def deplacement():
-        global dx, dy, score, button7
-        if canvas.coords(ball)[3]>720:
-            dy = -1*dy
-        if canvas.coords(ball)[3]<10:
-            dy = -1*dy 
-        if canvas.coords(ball)[3]>canvas.coords(raquette)[1] and canvas.coords(ball)[0]<canvas.coords(raquette)[2] and canvas.coords(ball)[2]>canvas.coords(raquette)[0]:
-            dx=-1*dx
-        if canvas.coords(ball)[3]>canvas.coords(raquette2)[1] and canvas.coords(ball)[0]<canvas.coords(raquette2)[2] and canvas.coords(ball)[2]>canvas.coords(raquette2)[0]:
-            dx=-1*dx 
-        if canvas.coords(ball)[0]<10:
-            score = score + 1
-            TextGame.set("Joueur 1 : "+ str(score)) 
-        canvas.move(ball,dx,dy)
-        jouer.after(20,deplacement)
-
-    
-    jouer = Tk()
-    jouer.title("Jeu Pong")
-
-    canvas = Canvas(jouer, width=1080, height=720, bg='black')
-    canvas.pack(padx=10, pady=10)
-    canvas.create_line(540,0,540,720, fill='white') 
-    ball = canvas.create_oval(Pos_X, Pos_Y, Pos_X+20, Pos_Y+20, fill='white')
-    raquette = canvas.create_rectangle(raqx0, raqy0, raqx1, raqy1, fill='white')
-    raquette2 = canvas.create_rectangle(raq2x0, raq2y0, raq2x1, raq2y1, fill='white')
-
-    canvas.bind_all('<s>', bas1)
-    canvas.bind_all('<Down>', bas2)
-    canvas.bind_all('<z>', haut1)
-    canvas.bind_all('<Up>', haut2)
-
-    TextGame = StringVar()
-    LabelGame = Label(jouer, textvariable = TextGame , bg ="grey")
-    TextGame.set("Joueur 1 : "+ str(score))
-    LabelGame.pack(padx = 15, pady = 5)
-
-    deplacement()
-    jouer.mainloop()
+import random
+import time
 
 def instruction():
     fenetre = Tk()
@@ -91,70 +20,148 @@ def instruction():
     ButtonFermer = Button(fenetre, text ="   Fermer    ", command = fenetre.destroy)
     ButtonFermer.pack(padx = 5, pady = 5)
 
-def pointpartie(): 
-    menu.destroy()
-    partie = Tk()
-    partie.title("Personnalisation")
-    label = Label(partie, text="Sélectionnez le nombre de points de la partie : ", bg="grey")
-    label.pack()
-    value = StringVar() 
-    bouton1 = Radiobutton(partie, text="5 points", variable=value, value=1)
-    bouton2 = Radiobutton(partie, text="10 points", variable=value, value=2)
-    bouton3 = Radiobutton(partie, text="15 points", variable=value, value=3)
-    bouton1.pack()
-    bouton2.pack()
-    bouton3.pack()
-    label = Label(partie, text=" Vitesse de la balle : ", bg="grey")
-    label.pack()
-    value2 = StringVar() 
-    bouton4 = Radiobutton(partie, text="Facile", variable=value2, value=4)
-    bouton5 = Radiobutton(partie, text="Moyen", variable=value2, value=5)
-    bouton6 = Radiobutton(partie, text="Difficile", variable=value2, value=6)
-    bouton4.pack()
-    bouton5.pack()
-    bouton6.pack()
-    label = Label(partie, text=" Couleur de la balle : ", bg="grey")
-    label.pack()
-    value3 = StringVar() 
-    bouton7 = Radiobutton(partie, text="Rouge", variable=value3, value=7)
-    bouton8 = Radiobutton(partie, text="Vert", variable=value3, value=8)
-    bouton9 = Radiobutton(partie, text="jaune", variable=value3, value=9)
-    bouton10 = Radiobutton(partie, text="violet", variable=value3, value=10)
-    bouton7.pack()
-    bouton8.pack()
-    bouton9.pack()
-    bouton10.pack()
-    label = Label(partie, text=" Couleur de la raquette joueur 1 : ", bg="grey")
-    label.pack()
-    value4 = StringVar() 
-    bouton11 = Radiobutton(partie, text="Rouge", variable=value4, value=11)
-    bouton12 = Radiobutton(partie, text="Vert", variable=value4, value=12)
-    bouton13 = Radiobutton(partie, text="jaune", variable=value4, value=13)
-    bouton14 = Radiobutton(partie, text="violet", variable=value4, value=14)
-    bouton11.pack()
-    bouton12.pack()
-    bouton13.pack()
-    bouton14.pack()
-    label = Label(partie, text=" Couleur de la raquette joueur 2 : ", bg="grey")
-    label.pack()
-    value5 = StringVar() 
-    bouton15 = Radiobutton(partie, text="Rouge", variable=value5, value=15)
-    bouton16 = Radiobutton(partie, text="Vert", variable=value5, value=16)
-    bouton17 = Radiobutton(partie, text="jaune", variable=value5, value=17)
-    bouton18 = Radiobutton(partie, text="violet", variable=value5, value=18)
-    bouton15.pack()
-    bouton16.pack()
-    bouton17.pack()
-    bouton18.pack()
-    ButtonValider = Button(partie,text="Valider", command= jouer)
-    ButtonValider.pack(padx = 10, pady = 5)
+class Ball:
+	def __init__(self,canvas,raquette2,raquette):
+		self.canvas = canvas
+		self.raquette = raquette
+		self.raquette2 = raquette2
+		self.score_j1 = 0
+		self.score_j2 = 0
+		self.point_j2 = 0
+		self.point_j1 = 0
+		self.ball = self.canvas.create_oval(10,10,35,35,fill = 'white')
+		self.canvas.move(self.ball,327,220)
+		self.x = random.choice([-2.5,2.5])
+		self.y = -2.5
+		
+	#check for score crossing 10 (win!)
+	def checkwin(self):
+		if self.score_j1 == 3:
+			time.sleep(10)
+			self.x = 0
+			self.y = 0
+		if self.score_j2 == 3:
+			time.sleep(10)
+			
+	
+	def update(self,val):
+		self.canvas.delete(self.point_j1)
+		self.point_j1 = self.canvas.create_text(170,50,font=('',40),text=str(val),fill='white')
+		
 
+	def update1(self,val):
+		self.canvas.delete(self.point_j2)
+		self.point_j2 = self.canvas.create_text(550,50,font=('',40),text=str(val),fill='white')		
+		
+	def collision(self,pos):
+		raq_pos = self.canvas.coords(self.raquette.raquet)
+		if pos[2] >= raq_pos[0] and pos[0] <= raq_pos[2]:
+			if pos[3] >= raq_pos[1] and pos[3] <= raq_pos[3]:
+				return True	
+			return False
+			
+	def collision2(self,pos):
+		raq2_pos = self.canvas.coords(self.raquette2.raquet)
+		if pos[2] >= raq2_pos[0] and pos[0] <= raq2_pos[2]:
+			if pos[3] >= raq2_pos[1] and pos[3] <= raq2_pos[3]:
+				return True	
+			return False
+			
+	def draw(self):
+		self.canvas.move(self.ball,self.x,self.y)
+		ball_pos = self.canvas.coords(self.ball)
+		if ball_pos[1] <= 0:
+			self.y = 4
+		if ball_pos[3] >= 500:
+			self.y =-4
+		if ball_pos[0] <= 0:
+			self.score_j2 += 1
+			self.canvas.move(self.ball,327,220)
+			self.x = 4
+			self.update1(self.score_j2)
+		if ball_pos[2] >=700:
+			self.score_j1 += 1
+			self.canvas.move(self.ball,-327,-220)
+			self.x = -4
+			self.update(self.score_j1)
+		if self.collision(ball_pos):
+			self.x = 4
+		if self.collision2(ball_pos):
+			self.x = -4
+		
+class raquette:
+	def __init__(self,canvas,color):
+		self.canvas = canvas
+		self.raquet = self.canvas.create_rectangle(0,200,20,310,fill=color)
+		self.y = 0
+		self.canvas.bind_all('z',self.haut)
+		self.canvas.bind_all('s',self.bas)	
+		
+	def haut(self,event):
+		self.y = -5
+		
+	def bas(self,event):
+		self.y = 5
+	
+	def draw(self):
+		self.canvas.move(self.raquet,0,self.y)
+		pos = self.canvas.coords(self.raquet)
+		if pos[1] <= 0:
+			self.y = 0
+		if pos[3] >= 500:
+			self.y = -0
+
+class raquette2:
+	def __init__(self,canvas,color):
+		self.canvas = canvas
+		self.raquet = self.canvas.create_rectangle(680,200,710,310,fill=color)
+		self.y = 0
+		self.canvas.bind_all('<Up>',self.haut)
+		self.canvas.bind_all('<Down>',self.bas)	
+		
+	def haut(self,event):
+		self.y = -5
+		
+	def bas(self,event):
+		self.y = 5
+	
+	def draw(self):
+		self.canvas.move(self.raquet,0,self.y)
+		pos = self.canvas.coords(self.raquet)
+		if pos[1] <= 0:
+			self.y = 0
+		if pos[3] >= 500:
+			self.y = 0
+
+def jouer():
+	menu.destroy()
+	jouer = Tk()
+	jouer.title('Pong')
+	jouer.resizable(0,0)
+	canvas = Canvas(jouer,width=700,height=500, bg='black')
+	canvas.pack()
+	jouer.update()
+	canvas.create_line(350,0,350,500,fill='white')
+
+	paddle = raquette(canvas,'white')
+	paddle1 = raquette2(canvas,'white')		
+	ball = Ball(canvas,paddle1,paddle)
+		
+	while 1:
+		ball.draw()
+		paddle.draw()
+		paddle1.draw()
+		ball.checkwin()
+		jouer.update_idletasks()
+		jouer.update()
+		time.sleep(0.01)
+	quit()
 
 menu = Tk()
 menu.title("[Pong]")
 menu.geometry("260x120")
- 
-ButtonJouer = Button(menu, text ="   Jouer   ", command = pointpartie)
+
+ButtonJouer = Button(menu, text ="   Jouer   ", command = jouer)
 ButtonJouer.pack(padx = 5, pady = 5)
 ButtonInstruction = Button(menu,text="Instruction et Commande", command= instruction)
 ButtonInstruction.pack(padx = 10, pady = 5)
