@@ -41,6 +41,23 @@ class Ball:
 			self.y = 0
 		if self.score_j2 == 5:
 			time.sleep(10)
+
+	def checkwin10(self):
+		if self.score_j1 == 10:
+			time.sleep(10)
+			self.x = 0
+			self.y = 0
+		if self.score_j2 == 10:
+			time.sleep(10)
+
+	def checkwin15(self):
+		if self.score_j1 == 15:
+			time.sleep(10)
+			self.x = 0
+			self.y = 0
+		if self.score_j2 == 15:
+			time.sleep(10)
+
 	
 	def update(self,val):
 		self.canvas.delete(self.point_j1)
@@ -138,14 +155,14 @@ def menu2():
 	point.title('Points')
 	label = Label(point, text=" Sélectionnez le nombre de points : ", bg="grey")
 	label.pack()
-	ButtonJouer1 = Button(point, text ="   5 points   ", command = couleur and point.destroy)
+	ButtonJouer1 = Button(point, text ="   5 points   ", command = couleur5)
 	ButtonJouer1.pack(padx = 5, pady = 5)
-	ButtonJouer2 = Button(point, text ="   10 points   ", command = couleur)
+	ButtonJouer2 = Button(point, text ="   10 points   ", command = couleur10)
 	ButtonJouer2.pack(padx = 5, pady = 5)
-	ButtonJouer3 = Button(point, text ="   15 points   ", command = couleur)
+	ButtonJouer3 = Button(point, text ="   15 points   ", command = couleur15)
 	ButtonJouer3.pack(padx = 5, pady = 5)
 
-def jouer():
+def jouerblanche():
 	jouer = Tk()
 	jouer.title('Pong')
 	jouer.resizable(0,0)
@@ -168,20 +185,30 @@ def jouer():
 		time.sleep(0.01)
 	quit()
 
-def couleur():
-	couleur = Tk ()
-	couleur.title('Couleur')
-	label = Label(couleur, text=" Sélectionnez la couleur de la balle : ", bg="grey")
-	label.pack()
-	ButtonJouer1 = Button(couleur, text ="   Blanche   ", command = jouer)
-	ButtonJouer1.pack(padx = 5, pady = 5)
-	ButtonJouer2 = Button(couleur, text ="   Verte   ", command = jouer2)
-	ButtonJouer2.pack(padx = 5, pady = 5)
-	ButtonJouer3 = Button(couleur, text ="   Rouge   ", command = jouer3)
-	ButtonJouer3.pack(padx = 5, pady = 5)
+def jouerrouge():
+	jouer = Tk()
+	jouer.title('Pong')
+	jouer.resizable(0,0)
+	canvas = Canvas(jouer,width=700,height=500, bg='black')
+	canvas.pack()
+	jouer.update()
+	canvas.create_line(350,0,350,500,fill='white')
 
+	paddle = raquette(canvas,'white')
+	paddle1 = raquette2(canvas,'white')		
+	ball = Ball(canvas,paddle1,paddle,'red')
+		
+	while 1:
+		ball.draw()
+		paddle.draw()
+		paddle1.draw()
+		ball.checkwin5()
+		jouer.update_idletasks()
+		jouer.update()
+		time.sleep(0.01)
+	quit()
 
-def jouer2():
+def jouerverte():
 	jouer = Tk()
 	jouer.title('Pong')
 	jouer.resizable(0,0)
@@ -204,7 +231,90 @@ def jouer2():
 		time.sleep(0.01)
 	quit()
 
-def jouer3():
+def couleur5():
+	couleur = Tk ()
+	couleur.title('Couleur')
+	label = Label(couleur, text=" Sélectionnez la couleur de la balle : ", bg="grey")
+	label.pack()
+	ButtonJouer1 = Button(couleur, text ="   Blanche   ", command = jouerblanche)
+	ButtonJouer1.pack(padx = 5, pady = 5)
+	ButtonJouer2 = Button(couleur, text ="   Verte   ", command = jouerverte)
+	ButtonJouer2.pack(padx = 5, pady = 5)
+	ButtonJouer3 = Button(couleur, text ="   Rouge   ", command = jouerrouge)
+	ButtonJouer3.pack(padx = 5, pady = 5)
+
+def couleur10():
+	couleur = Tk ()
+	couleur.title('Couleur')
+	label = Label(couleur, text=" Sélectionnez la couleur de la balle : ", bg="grey")
+	label.pack()
+	ButtonJouer1 = Button(couleur, text ="   Blanche   ", command = jouer2blanche)
+	ButtonJouer1.pack(padx = 5, pady = 5)
+	ButtonJouer2 = Button(couleur, text ="   Verte   ", command = jouer2verte)
+	ButtonJouer2.pack(padx = 5, pady = 5)
+	ButtonJouer3 = Button(couleur, text ="   Rouge   ", command = jouer2rouge)
+	ButtonJouer3.pack(padx = 5, pady = 5)
+
+def couleur15():
+	couleur = Tk ()
+	couleur.title('Couleur')
+	label = Label(couleur, text=" Sélectionnez la couleur de la balle : ", bg="grey")
+	label.pack()
+	ButtonJouer1 = Button(couleur, text ="   Blanche   ", command = jouer3blanche)
+	ButtonJouer1.pack(padx = 5, pady = 5)
+	ButtonJouer2 = Button(couleur, text ="   Verte   ", command = jouer3verte)
+	ButtonJouer2.pack(padx = 5, pady = 5)
+	ButtonJouer3 = Button(couleur, text ="   Rouge   ", command = jouer3rouge)
+	ButtonJouer3.pack(padx = 5, pady = 5)
+
+
+def jouer2blanche():
+	jouer = Tk()
+	jouer.title('Pong')
+	jouer.resizable(0,0)
+	canvas = Canvas(jouer,width=700,height=500, bg='black')
+	canvas.pack()
+	jouer.update()
+	canvas.create_line(350,0,350,500,fill='white')
+
+	paddle = raquette(canvas,'white')
+	paddle1 = raquette2(canvas,'white')		
+	ball = Ball(canvas,paddle1,paddle,'white')
+		
+	while 1:
+		ball.draw()
+		paddle.draw()
+		paddle1.draw()
+		ball.checkwin10()
+		jouer.update_idletasks()
+		jouer.update()
+		time.sleep(0.01)
+	quit()
+
+def jouer2verte():
+	jouer = Tk()
+	jouer.title('Pong')
+	jouer.resizable(0,0)
+	canvas = Canvas(jouer,width=700,height=500, bg='black')
+	canvas.pack()
+	jouer.update()
+	canvas.create_line(350,0,350,500,fill='white')
+
+	paddle = raquette(canvas,'white')
+	paddle1 = raquette2(canvas,'white')		
+	ball = Ball(canvas,paddle1,paddle,'green')
+		
+	while 1:
+		ball.draw()
+		paddle.draw()
+		paddle1.draw()
+		ball.checkwin10()
+		jouer.update_idletasks()
+		jouer.update()
+		time.sleep(0.01)
+	quit()
+
+def jouer2rouge():
 	jouer = Tk()
 	jouer.title('Pong')
 	jouer.resizable(0,0)
@@ -221,11 +331,80 @@ def jouer3():
 		ball.draw()
 		paddle.draw()
 		paddle1.draw()
-		ball.checkwin5()
+		ball.checkwin10()
 		jouer.update_idletasks()
 		jouer.update()
 		time.sleep(0.01)
-	quit()		
+	quit()
+
+def jouer3blanche():
+	jouer = Tk()
+	jouer.title('Pong')
+	jouer.resizable(0,0)
+	canvas = Canvas(jouer,width=700,height=500, bg='black')
+	canvas.pack()
+	jouer.update()
+	canvas.create_line(350,0,350,500,fill='white')
+
+	paddle = raquette(canvas,'white')
+	paddle1 = raquette2(canvas,'white')		
+	ball = Ball(canvas,paddle1,paddle,'white')
+		
+	while 1:
+		ball.draw()
+		paddle.draw()
+		paddle1.draw()
+		ball.checkwin15()
+		jouer.update_idletasks()
+		jouer.update()
+		time.sleep(0.01)
+	quit()	
+
+def jouer3rouge():
+	jouer = Tk()
+	jouer.title('Pong')
+	jouer.resizable(0,0)
+	canvas = Canvas(jouer,width=700,height=500, bg='black')
+	canvas.pack()
+	jouer.update()
+	canvas.create_line(350,0,350,500,fill='white')
+
+	paddle = raquette(canvas,'white')
+	paddle1 = raquette2(canvas,'white')		
+	ball = Ball(canvas,paddle1,paddle,'red')
+		
+	while 1:
+		ball.draw()
+		paddle.draw()
+		paddle1.draw()
+		ball.checkwin15()
+		jouer.update_idletasks()
+		jouer.update()
+		time.sleep(0.01)
+	quit()	
+
+def jouer3verte():
+	jouer = Tk()
+	jouer.title('Pong')
+	jouer.resizable(0,0)
+	canvas = Canvas(jouer,width=700,height=500, bg='black')
+	canvas.pack()
+	jouer.update()
+	canvas.create_line(350,0,350,500,fill='white')
+
+	paddle = raquette(canvas,'white')
+	paddle1 = raquette2(canvas,'white')		
+	ball = Ball(canvas,paddle1,paddle,'green')
+		
+	while 1:
+		ball.draw()
+		paddle.draw()
+		paddle1.draw()
+		ball.checkwin15()
+		jouer.update_idletasks()
+		jouer.update()
+		time.sleep(0.01)
+	quit()	
 
 menu = Tk()
 menu.title("[Pong]")
